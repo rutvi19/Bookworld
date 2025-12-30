@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - BookStore</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root{
+            --dark:#020617;
+            --dark2:#0f172a;
+            --accent:#38bdf8;
+            --border:#1e293b;
+            --text:#e5e7eb;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            min-height:100vh;
+            background:linear-gradient(135deg,#020617,#020617,#0f172a);
+            color:var(--text);
+            overflow-x:hidden;
+            animation:fadeBody 1s ease;
+        }
+
+        @keyframes fadeBody{
+            from{opacity:0;}
+            to{opacity:1;}
+        }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar{
+            width:260px;
+            min-height:100vh;
+            background:rgba(2,6,23,0.98);
+            position:fixed;
+            box-shadow:20px 0 50px rgba(0,0,0,0.9);
+            animation:slideLeft 0.8s ease;
+        }
+
+        @keyframes slideLeft{
+            from{transform:translateX(-100%);}
+            to{transform:translateX(0);}
+        }
+
+        .sidebar h4{
+            font-weight:700;
+            color:#fff;
+        }
+
+        .sidebar .nav-link{
+            color:#cbd5f5;
+            padding:15px 24px;
+            border-left:4px solid transparent;
+            transition:0.4s;
+        }
+
+        .sidebar .nav-link i{ width:25px; }
+
+        .sidebar .nav-link:hover{
+            background:rgba(56,189,248,0.2);
+            color:#fff;
+            border-left:4px solid var(--accent);
+            transform:translateX(8px);
+        }
+
+        .sidebar .nav-link.active{
+            background:rgba(56,189,248,0.3);
+            border-left:4px solid var(--accent);
+            color:#fff;
+        }
+
+        /* ================= MAIN ================= */
+        .main-content{
+            margin-left:260px;
+            padding:30px;
+            width:calc(100% - 260px);
+            animation:fadeUp 1s ease;
+        }
+
+        @keyframes fadeUp{
+            from{opacity:0; transform:translateY(30px);}
+            to{opacity:1; transform:translateY(0);}
+        }
+
+        /* ================= NAVBAR ================= */
+        .navbar{
+            background:rgba(15,23,42,0.95);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:16px 20px;
+            animation:scaleIn 0.7s ease;
+        }
+
+        @keyframes scaleIn{
+            from{transform:scale(0.9); opacity:0;}
+            to{transform:scale(1); opacity:1;}
+        }
+
+        /* ================= CARDS ================= */
+        .card{
+            background:rgba(2,6,23,0.96);
+            border:1px solid var(--border);
+            color:var(--text);
+            border-radius:20px;
+            transition:0.4s;
+            box-shadow:0 30px 70px rgba(0,0,0,0.9);
+            animation:cardPop 0.8s ease;
+        }
+
+        @keyframes cardPop{
+            from{opacity:0; transform:translateY(40px);}
+            to{opacity:1; transform:translateY(0);}
+        }
+
+        .card:hover{
+            transform:translateY(-12px) scale(1.03);
+            box-shadow:0 40px 90px rgba(56,189,248,0.25);
+        }
+
+        /* ================= ALERT ================= */
+        .alert{
+            background:rgba(2,6,23,0.95);
+            color:var(--text);
+            border:1px solid var(--border);
+            border-radius:14px;
+        }
+
+        /* ================= TABLE DARK THEME ================= */
+        .table{
+            background:rgba(2,6,23,0.96) !important;
+            color:var(--text) !important;
+            border-radius:16px;
+            overflow:hidden;
+        }
+
+        .table thead{
+            background:rgba(15,23,42,0.95) !important;
+        }
+
+        .table thead th{
+            color:#000000 !important;
+            border-bottom:1px solid var(--border) !important;
+        }
+
+        .table tbody tr{
+            background:rgba(2,6,23,0.96) !important;
+            transition:0.3s;
+        }
+
+        .table tbody tr:hover{
+            background:rgba(56,189,248,0.12) !important;
+        }
+
+        .table td{
+            color:#030303 !important;
+            border-top:1px solid var(--border) !important;
+        }
+
+        .table-responsive,
+        .card-body{
+            background:transparent !important;
+        }
+
+        /* ================= MOBILE ================= */
+        @media(max-width:768px){
+            .sidebar{
+                margin-left:-260px;
+                transition:0.4s;
+            }
+            .sidebar.active{
+                margin-left:0;
+            }
+            .main-content{
+                margin-left:0;
+                width:100%;
+                padding:20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="d-flex">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="text-center py-4">
+            <h4><i class="fas fa-book-open me-2"></i>Admin Panel</h4>
+        </div>
+
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="/adminapp/admin_dashboard" class="nav-link active">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item"><a href="/adminapp/admin_books" class="nav-link"><i class="fas fa-book"></i> Books</a></li>
+            <li class="nav-item"><a href="/adminapp/admin_orders" class="nav-link"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+            <li class="nav-item"><a href="/adminapp/admin_users" class="nav-link"><i class="fas fa-users"></i> Users</a></li>
+            <li class="nav-item"><a href="/adminapp/admin_add_book" class="nav-link"><i class="fas fa-plus-circle"></i> Add Book</a></li>
+            <li class="nav-item">
+                <a href="/adminapp/admin_contact/" class="nav-link">
+                    <i class="fas fa-envelope"></i> Contacts
+                </a>
+            </li>
+            <li class="nav-item mt-5">
+                <a href="{% url 'admin_logout' %}" class="nav-link text-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+                <a href="{% url 'admin_login' %}" class="nav-link text-danger">
+                    <i class="fas fa-sign-out-alt"></i> Login
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <nav class="navbar mb-4 d-flex align-items-center">
+            <button class="btn btn-outline-info d-md-none" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h5 class="ms-3 mb-0">Welcome, Admin 👋</h5>
+            <div class="ms-auto">
+                <img src="https://via.placeholder.com/40" class="rounded-circle border border-info">
+            </div>
+        </nav>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% block admin_content %}
+        {% endblock %}
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById("menu-toggle").onclick = function(){
+        document.getElementById("sidebar").classList.toggle("active");
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends 'admin_base.html' %}
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3>Edit Book: {{ book.title }}</h3>
+    <a href="{% url 'admin_books' %}" class="btn btn-secondary">Back to List</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        
+        <!-- Action URL સુધારેલ છે: Dynamic ID સાથે -->
+        <form method="POST" action="{% url 'admin_edit_pro' book.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Book Title</label>
+                    <input type="text" name="title" value="{{ book.title }}" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Author Name</label>
+                    <input type="text" name="author" value="{{ book.author }}" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Price</label>
+                    <input type="number" step="0.01" name="price" value="{{ book.price }}" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Stock Quantity</label>
+                    <input type="number" name="stock" value="{{ book.stock }}" class="form-control" required>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="4">{{ book.description }}</textarea>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Category</label>
+                    <select name="category" class="form-select">
+                        <option value="Fiction" {% if book.category == 'Fiction' %}selected{% endif %}>Fiction</option>
+                        <option value="Non-Fiction" {% if book.category == 'Non-Fiction' %}selected{% endif %}>Non-Fiction</option>
+                        <option value="Science" {% if book.category == 'Science' %}selected{% endif %}>Science</option>
+                    </select> 
+                </div> 
+                
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Change Cover Image</label>
+                    <!-- હાલની ઈમેજ જોવા માટે -->
+                    {% if book.image %}
+                        <div class="mb-2">
+                            <img src="{{ book.image.url }}" width="60" style="border-radius: 5px; border: 1px solid #ddd;">
+                        </div>
+                    {% endif %}
+                    <input type="file" name="image" class="form-control">
+                </div>
+            </div>
+            
+            <hr>
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

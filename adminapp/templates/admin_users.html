@@ -1,0 +1,33 @@
+{% extends 'admin_base.html' %}
+{% block admin_content %}
+<h3 class="mb-4">Registered Users</h3>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Date Joined</th>
+                    <th>Is Admin?</th>
+                    <th>Action</th>
+                </tr>
+                </thead>    
+                <tbody>
+                    {% for user in users %} 
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.date}}</td>
+                        <td><i class="fas fa-check text-success"></i></td>
+                        <td>-</td>
+                    </tr>
+                    {% endfor %}  
+                </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

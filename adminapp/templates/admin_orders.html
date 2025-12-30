@@ -1,0 +1,49 @@
+{% extends 'admin_base.html' %}
+{% block admin_content %}
+<h3 class="mb-4">Order Management</h3>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-bordered table-hover">
+            <thead class="bg-light">
+                <tr>
+                    <th>Order ID</th>   
+                    <th>Customer</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr> 
+                    <td>#{{ order.id }}</td>
+                    <td>{{ order.user.username }}</td> <!-- Customer name -->
+                    <td>₹{{ order.total_price }}</td>
+                    <td>
+                        <form action="" method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <select class="form-select form-select-sm" name="status" style="width: 130px;" onchange="this.form.submit()">
+                                <option value="Processing" {% if order.status == 'Processing' %}selected{% endif %}>Processing</option>
+                                <option value="Shipped" {% if order.status == 'Shipped' %}selected{% endif %}>Shipped</option>
+                                <option value="Delivered" {% if order.status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                <option value="Cancelled" {% if order.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                            </select>
+                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                        </form>
+                    </td>
+                    <td>
+                        <a href="" class="btn btn-primary btn-sm">View Details</a>
+                        <a href="{% url 'order_delete' order.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No orders found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}  
