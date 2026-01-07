@@ -16,3 +16,10 @@ class contact_form(forms.ModelForm):
     class Meta:
         model = contact_cls
         fields = '__all__'
+
+class notes_form(forms.ModelForm):
+    class Meta:
+        model = notes_cls
+        fields = '__all__' 
+
+

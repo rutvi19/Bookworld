@@ -2,18 +2,20 @@
 
 {% block content %}
 
+{% load socialaccount %}
+
 <div class="row justify-content-center">
-    
+
     <div class="col-md-4">
-       
+
         <h3 class="text-center mb-3">Login</h3>
-        
+
         <div class="card shadow-sm">
-           
+
             <div class="card-body">
-                
+
                 <form method="POST">
-                    
+
                     {% csrf_token %}
                     <div class="mb-3">
                         <label style="color:white;">Username</label>
@@ -22,20 +24,37 @@
                     <div class="mb-3">
                         <label style="color:white;">Password</label>
                         <input type="password" name="password" class="form-control" required>
-                    
+
                     </div>
-                    
+
                     <button type="submit" class="btn btn-primary w-100">Login</button>
-                
-                </form>
-                
-                <p class="mt-3 text-center">Don't have an account? <a href="/register">Register</a></p>
-            
+
+                    <!-- Divider -->
+                    <div class="or-divider my-4">
+                        <span>OR</span>
+                    </div>
+
+                    <a href="{% provider_login_url 'google' %}" class="btn social-btn google-btn w-100 mb-3">
+                        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google">
+                        <span>Login with Google</span>
+                    </a>
+
+                     <a href="{% provider_login_url 'github' %}" class="btn social-btn google-btn w-100 mb-3">
+                        <img src="https://www.svgrepo.com/show/512317/github-142.svg" alt="Github">
+                        Login with GitHub
+                    </a>       
+
             </div>
-        
+
+            </form>
+
+            <p class="mt-3 text-center">Don't have an account? <a href="/register/">Register</a></p>
+
         </div>
-    
+
     </div>
+
+</div>
 
 </div>
 

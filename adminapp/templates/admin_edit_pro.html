@@ -8,7 +8,7 @@
 <div class="card shadow-sm">
     <div class="card-body">
         
-        <!-- Action URL સુધારેલ છે: Dynamic ID સાથે -->
+        
         <form method="POST" action="{% url 'admin_edit_pro' book.id %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">

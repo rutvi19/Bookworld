@@ -8,16 +8,15 @@ import random
 from .models import regisdata, cart  
 from adminapp.models import add_book_cls, order
 
-
-
 # Create your views here.
-
-
 def home(request):
     product = add_book_cls.objects.all()
     return render(request, 'home.html',{'product':product})
 
 def shop(request): 
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
     product = add_book_cls.objects.all() 
     return render(request, 'book_list.html', {'product': product})
 
@@ -157,10 +156,7 @@ def edit_profile(request):
             print("Profile Updated!")
             return redirect("profile") 
     else:
-       
         updateReq = register_form(instance=user)
-
-   
     return render(request, 'edit_profile.html', {'user': user, 'form': updateReq})
 
 def user_logout(request):
@@ -188,3 +184,16 @@ def add_to_cart(request, id):
 def book_detail(request, id):
     book = get_object_or_404(add_book_cls, id=id)
     return render(request, 'book_detail.html', {'book': book})
+
+def notes(request):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
+    if request.method=='POST':
+        form = notes_form(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            print("notes upload successfully!!")
+        else:
+            print("error to save note!")    
+    return render(request,'notes.html')

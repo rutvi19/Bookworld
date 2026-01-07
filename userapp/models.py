@@ -33,3 +33,9 @@ class contact_cls(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     message = models.CharField(max_length=1000)
+
+class notes_cls(models.Model):
+    title = models.CharField(max_length=100)
+    file = models.FileField(upload_to='MyNotes')
+    description = models.CharField(max_length=1000)
+    created_at = models.DateField(auto_now_add=True)

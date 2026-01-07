@@ -3,7 +3,7 @@ from userapp.models import *
 from .forms import *
 from django.contrib.auth import logout
 from .models import * 
-from userapp.models import regisdata
+from userapp.models import regisdata,notes_cls
 
 # Create your views here.
 
@@ -12,7 +12,6 @@ def admin_dashboard(request):
     book = add_book_cls.objects.all()
     ord = order.objects.all()
     ords = order.objects.all()
-
     total_order = len(ord)
     total_book = len(book)
     total_user = len(user)
@@ -27,11 +26,9 @@ def admin_add_book(request):
         form = add_book_form(request.POST, request.FILES) 
         if form.is_valid():
             form.save()
-            print("Book Added Successfully") 
-           
+            print("Book Added Successfully")
         else:
             print(form.errors)    
-    
     return render(request, 'admin_add_book.html')
 
 def admin_orders(request):
@@ -53,22 +50,16 @@ def admin_login(request):
             print("login invalid!!!")
     return render(request,'admin_login.html')
 
-def admin_edit_pro(request, id):  # અહી id parameter લેવો પડે
-    # URL માંથી આવેલા ID પરથી બુક શોધો (Session માંથી નહિ)
+def admin_edit_pro(request, id): 
     book = get_object_or_404(add_book_cls, id=id) 
-
-    if request.method == 'POST': 
-        # Image માટે request.FILES મુકવું જરૂરી છે
+    if request.method == 'POST':
         updateReq = add_book_form(request.POST, request.FILES, instance=book)
-        
         if updateReq.is_valid():
             updateReq.save()
             print("Updated Book Successfully!")
             return redirect("admin_books")
         else:
             print(updateReq.errors)
-
-    # Template માં 'book' ઓબ્જેક્ટ મોકલો
     return render(request, 'admin_edit_pro.html', {'book': book})
 
 def logout_view(request):
@@ -91,3 +82,7 @@ def user_delete(request, id):
 def admin_contact(request):
     contact = contact_cls.objects.all()
     return render(request,'admin_contact.html',{'contact':contact})
+
+def admin_notes(request):
+    notes=notes_cls.objects.all()
+    return render(request,'admin_notes.html',{'notes':notes})

@@ -21,17 +21,17 @@
            <tbody>
     {% for i in books %}
     <tr>
-        <!-- Display the actual uploaded image -->
+        
         <td>
             {% if i.image %}
                 <img src="{{ i.image.url }}" class="rounded" width="50" alt="{{ i.title }}">
             {% else %}
-                <!-- Fallback if no image exists -->
+                
                 <img src="https://via.placeholder.com/50" class="rounded" width="50">
             {% endif %}
         </td>
         
-        <!-- You don't need a separate column for {{ i.image }} text -->
+      
         
         <td>{{ i.title }}</td>
         <td>{{ i.author }}</td>
@@ -39,7 +39,7 @@
         <td>{{ i.stock }}</td>
         <td>
             <a href="{% url 'admin_edit_pro' i.id %}" class="btn btn-warning btn-sm">Edit</a>
-<!-- અહી i.id પાસ કરો, Django આપમેળે સ્લેશ લગાવી દેશે -->
+
             <a href="{% url 'user_delete' i.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this book?')">
                 <i class="fas fa-trash"></i>
             </a>

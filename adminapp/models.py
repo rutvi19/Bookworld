@@ -7,7 +7,7 @@ class add_book_cls(models.Model):
     author = models.CharField(max_length=100)
     price = models.IntegerField()
     stock = models.IntegerField()
-    description = models.CharField(max_length=100)
+    description = models.CharField(max_length=1000)
     category = models.CharField(max_length=100)
     image = models.ImageField()
 
